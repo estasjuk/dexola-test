@@ -5,13 +5,13 @@ async function main() {
   // Get the contract owner
     const contractOwner = await ethers.getSigners();
     console.log(`Deploying contract from: ${contractOwner[0].address}`);
-    const SolarGreenFactory = await ethers.getContractFactory('SolarGreen');
+    const SaleTokenFactory = await ethers.getContractFactory('SaleToken');
     
   // Deploy the contract
-    console.log('Deploying contract...');
-    const solarGreen = await SolarGreenFactory.deploy("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266");
-    await solarGreen.waitForDeployment();
-    console.log("SolarGreen deployed to", solarGreen.target)
+    console.log('Deploying contract SaleToken...');
+    const saleToken = await SaleTokenFactory.deploy("0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266");
+    await saleToken.waitForDeployment();
+    console.log("SaleToken deployed to", saleToken.target)
 }
 
 main()

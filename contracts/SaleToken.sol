@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 
-pragma solidity 0.8.19;
+pragma solidity ^0.8.19;
 
 import "./SolarGreen.sol";
 
@@ -22,11 +22,11 @@ contract TokenSale {
         owner = payable(msg.sender);
         saleStart = block.timestamp;
         saleEnd = saleStart + 5 weeks;
-        tokensBalanceForSale = token.balanceOf(address(this)) / 2;
+        tokensBalanceForSale = token.balanceOf(address(0x5FbDB2315678afecb367f032d93F642f64180aa3)) / 2;
     }
 
     modifier onlyOwner() {
-        require(msg.sender == owner, "not an owner!");
+        require(msg.sender == owner, "not an owner");
         _;
     }
 
