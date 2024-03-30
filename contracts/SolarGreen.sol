@@ -2,11 +2,12 @@
 
 pragma solidity 0.8.20;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 
-contract SolarGreen is ERC20, ERC20Burnable, Ownable {
+import "./ISolarGreen.sol";
+
+contract SolarGreen is ISolarGreen, ERC20Burnable, Ownable {
     mapping (address => bool) private isBlacklisted;
     event AddressBlacklisted(address indexed addr, bool isBlacklisted);
 
@@ -36,7 +37,7 @@ contract SolarGreen is ERC20, ERC20Burnable, Ownable {
         emit AddressBlacklisted(user, false);
     }
 
-    function isUserBlacklisted(address user) public view returns (bool) {
+    function isUserBlacklisted(address user) external view returns (bool) {
         return isBlacklisted[user];
     }
 }

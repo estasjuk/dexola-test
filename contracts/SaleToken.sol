@@ -1,28 +1,27 @@
 // SPDX-License-Identifier: UNLICENSED
 
-pragma solidity ^0.8.19;
+pragma solidity 0.8.20;
 
 import "./SolarGreen.sol";
 
-contract TokenSale {
-    IERC20 public token;
+contract TokenSale{
+    ISolarGreen public token;
     address payable public owner;
     uint256 public saleStart;
     uint256 public saleEnd;
-    uint256 tokensBalanceForSale;
-    bool isUserBlacklisted;
+    uint256 public tokensBalanceForSale;
+    bool public isUserBlacklisted;
     
     mapping (address => uint256) public userTokenBalances;
 
     event Bought(uint _amount, address indexed _buyer);
-    event Sold(uint _amount, address indexed _seller);
 
     constructor() {
-        token = new SolarGreen(address(this));
+        token = ISolarGreen(new SolarGreen(address(this)));
         owner = payable(msg.sender);
         saleStart = block.timestamp;
         saleEnd = saleStart + 5 weeks;
-        tokensBalanceForSale = token.balanceOf(address(0x5FbDB2315678afecb367f032d93F642f64180aa3)) / 2;
+        tokensBalanceForSale = token.balanceOf(address(this)) / 2;
     }
 
     modifier onlyOwner() {
@@ -30,14 +29,24 @@ contract TokenSale {
         _;
     }
 
-    function getUserTokenBalance(address user) public view returns (uint256) {
-        return userTokenBalances[user];
-    }    
+    modifier onlyActive {
+        require(block.timestamp >= saleStart, "sale must be active.");
+        require(block.timestamp <= saleEnd, "sale must be active.");
+        _;
+    }
 
-    receive() external payable {
+    function getUserTokenBalance(address user) public view returns (uint256){
+        return userTokenBalances[user];
+    }
+
+    function changeSaleEnd (uint _newSaleEnd) public onlyOwner {
+        saleEnd = _newSaleEnd;
+    }
+
+    receive() external payable onlyActive {
         uint256 tokensForSale = msg.value / 100; // 1 token = 100 wei
-        isUserBlacklisted = token.isUserBlackListed(msg.sender);
-        require(isUserBlacklisted != false, "user is blacklisted");
+        isUserBlacklisted = token.isUserBlacklisted(msg.sender);
+        require(isUserBlacklisted = false, "user is blacklisted");
         require(msg.sender != address(0), "zero address");
         require(msg.sender.balance >= msg.value, "not enough funds");
         require(tokensForSale > 0, "impossible to buy 0 tokens");
@@ -45,7 +54,7 @@ contract TokenSale {
         require(tokensForSale <= tokensBalanceForSale, "not enough tokens");
 
         userTokenBalances[msg.sender] += tokensForSale;
-
+        
         token.transfer(msg.sender, tokensForSale);
         tokensBalanceForSale -= tokensForSale;
         emit Bought(tokensForSale, msg.sender);
