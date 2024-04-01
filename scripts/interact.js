@@ -1,7 +1,7 @@
 require('dotenv').config();
 const { ethers } = require('ethers');
 
-const { abi } = require("../artifacts/contracts/SolarGreen.sol/SolarGreen.json");
+const { abi } = require("../artifacts/contracts/SaleToken.sol/SaleToken.json");
 
 const INFURA_LINK = process.env.INFURA_LINK;
 const PRIVATE_KEY = process.env.PRIVATE_KEY;
@@ -19,7 +19,7 @@ const mintTokens = async (address, amount) => {
             console.log('Mint transaction sent:', txMintHash);
             await txMint.wait(5);
             console.log('tokens minted successfully');
-            return [txMintHash];
+            return txMintHash;
     } catch (error) {
         console.error('Error minting', error);
     }

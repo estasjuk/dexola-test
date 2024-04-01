@@ -4,8 +4,8 @@ pragma solidity 0.8.20;
 
 import "./SolarGreen.sol";
 
-contract TokenSale{
-    ISolarGreen public token;
+contract SaleToken{
+    SolarGreen public token;
     address payable public owner;
     uint256 public saleStart;
     uint256 public saleEnd;
@@ -17,7 +17,7 @@ contract TokenSale{
     event Bought(uint _amount, address indexed _buyer);
 
     constructor() {
-        token = ISolarGreen(new SolarGreen(address(this)));
+        token = new SolarGreen(address(this));
         owner = payable(msg.sender);
         saleStart = block.timestamp;
         saleEnd = saleStart + 5 weeks;
