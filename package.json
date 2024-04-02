@@ -4,7 +4,27 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npx hardhat test",
+    "test:coverage": "nyc npm run test"
+  },
+  "nyc": {
+    "extends": "@istanbuljs/nyc-config-typescript",
+    "check-coverage": true,
+    "all": true,
+    "include": [
+      "test/*.[tj]s?(x)"
+    ],
+    "exclude": [
+      "src/database/**/*.*",
+      "src/interfaces/**/*.*",
+      "src/routes/**/*.*",
+      "src/schemas/**/*.*",
+      "src/services/**/*.*",
+      "src/app.ts",
+      "src/test/**/*.*"
+    ],
+    "lines": 50,
+    "report-dir": ".nyc_coverage"
   },
   "keywords": [],
   "author": "",
@@ -20,6 +40,7 @@
     "solidity-coverage": "^0.8.11"
   },
   "dependencies": {
+    "@istanbuljs/nyc-config-typescript": "^1.0.2",
     "dotenv": "^16.4.5"
   }
 }
