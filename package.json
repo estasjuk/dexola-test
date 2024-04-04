@@ -35,12 +35,14 @@
     "@nomicfoundation/hardhat-verify": "^2.0.5",
     "@nomiclabs/hardhat-ethers": "npm:hardhat-deploy-ethers@^0.4.1",
     "@openzeppelin/contracts": "^5.0.2",
+    "@openzeppelin/test-helpers": "^0.5.16",
     "ethers": "^6.11.1",
     "hardhat": "^2.22.2",
     "solidity-coverage": "^0.8.11"
   },
   "dependencies": {
     "@istanbuljs/nyc-config-typescript": "^1.0.2",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.10",
     "dotenv": "^16.4.5"
   }
 }
