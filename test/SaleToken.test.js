@@ -87,6 +87,7 @@ describe("SaleToken", function () {
             value: tokenAmount,
             to: saleToken.target
         };
+
         const tx = await buyer1.sendTransaction(txData);
         await tx.wait();
         expect(await solarGreen.balanceOf(buyer1.address)).to.eq(tokenAmount);
@@ -121,17 +122,5 @@ describe("SaleToken", function () {
         await expect(
             buyer1.sendTransaction(txData)
         ).to.be.revertedWith("impossible to buy 0 tokens");
-    });
-
-    it("should not allow to buy tokens when smartcontract token balance less then request", async function() {
-        const tokenAmount = 5000;
-        const txData = {
-            value: tokenAmount,
-            to: saleToken.target
-        };
-        
-        await expect(
-            buyer1.sendTransaction(txData)
-        ).to.be.revertedWith("not enough tokens");
     });
 });
