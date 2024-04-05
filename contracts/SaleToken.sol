@@ -54,7 +54,7 @@ contract SaleToken{
         require(msg.sender != address(0), "zero address");
         require(msg.sender.balance >= msg.value, "not enough funds");
         require(tokensForSale > 0, "impossible to buy 0 tokens");
-        //require((getUserTokenBalance(msg.sender) + tokensForSale) <= 50000, "token sale limit" ); //checking the purchase limit of 50,000 tokens per one wallet
+        require((getUserTokenBalance(msg.sender) + tokensForSale) <= 50000, "token sale limit" ); //checking the purchase limit of 50,000 tokens per one wallet
         require(tokensForSale <= tokensBalanceForSale, "not enough tokens");
 
         userTokenBalances[msg.sender] += tokensForSale;
