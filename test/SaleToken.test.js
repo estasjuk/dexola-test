@@ -98,7 +98,7 @@ describe("SaleToken", function () {
         await expect(tx)
             .to.emit(saleToken, "Bought")
             .withArgs(tokenAmount, buyer1.address)
-    });
+    })
 
     it("should not allow to buy more than token limit", async function() {
         const tokenAmount = 60000;
@@ -110,7 +110,7 @@ describe("SaleToken", function () {
         await expect(
             buyer1.sendTransaction(txData)
         ).to.be.revertedWith("token sale limit");
-    });
+    })
 
     it("should not allow to buy 0 tokens", async function() {
         const tokenAmount = 0;
@@ -122,5 +122,5 @@ describe("SaleToken", function () {
         await expect(
             buyer1.sendTransaction(txData)
         ).to.be.revertedWith("impossible to buy 0 tokens");
-    });
-});
+    })
+})
